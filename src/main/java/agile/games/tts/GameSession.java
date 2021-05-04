@@ -37,6 +37,11 @@ public class GameSession {
         return addPlayerAt(name, userId, p.getX(), p.getY());
     }
 
+    public PlayerId addBotPlayerNamed(String name, UserId userId) {
+        PlayerPosition p = board.getRandomFreeSquare();
+        return addBotPlayerAt(name, userId, p.getX(), p.getY());
+    }
+
     public PlayerId addPlayerAt(UserId userId, int x, int y) {
         return addPlayerAt("test", userId, x, y);
     }
@@ -45,6 +50,14 @@ public class GameSession {
         User user = findUserById(userId);
         user.setAsPlayer();
         Player player = new Player(name, x, y, board, avatarAssigner.nextAvatar());
+        players.put(player.getId(), player);
+        return player.getId();
+    }
+
+    public PlayerId addBotPlayerAt(String name, UserId userId, int x, int y) {
+        User user = findUserById(userId);
+        user.setAsPlayer();
+        Player player = new BotPlayer(name, x, y, board, avatarAssigner.nextAvatar());
         players.put(player.getId(), player);
         return player.getId();
     }

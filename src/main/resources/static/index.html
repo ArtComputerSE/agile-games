@@ -16,21 +16,21 @@
 <body>
 <div id="app"></div>
 <script>
-    var storedState = localStorage.getItem('session');
-    var startingState = storedState ? JSON.parse(storedState) : "";
+    const storedState = localStorage.getItem('session');
+    const startingState = storedState ? JSON.parse(storedState) : "";
 
-    var app = Elm.Main.init(
+    const app = Elm.Main.init(
         {
             node: document.getElementById('app'),
             flags: startingState
         }
     );
-    var host = location.hostname + ":" + location.port;
-    var protocol = "wss:";
+    const host = location.hostname + ":" + location.port;
+    let protocol = "wss:";
     if (location.protocol === "http:") {
         protocol = "ws:"
     }
-    var ws = new WebSocket(protocol + "//" + host + "/ws/tts");
+    const ws = new WebSocket(protocol + "//" + host + "/ws/tts");
 
     ws.onmessage = function (message) {
         console.log("WebSocketIn");
